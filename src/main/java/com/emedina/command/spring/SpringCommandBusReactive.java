@@ -2,15 +2,15 @@ package com.emedina.command.spring;
 
 import com.emedina.sharedkernel.command.Command;
 import com.emedina.sharedkernel.command.core.CommandBus;
-import com.emedina.sharedkernel.command.core.CommandHandler;
+import com.emedina.sharedkernel.command.core.CommandHandlerReactive;
 import org.springframework.context.annotation.Bean;
+import reactor.core.publisher.Mono;
 
 /**
  * Implementation of a command bus backed by Spring's registry.
  *
- * @author Enrique Medina Montenegro
- */
-public class SpringCommandBus implements CommandBus {
+*/
+class SpringCommandBusReactive implements CommandBus {
 
     private final Registry registry;
 
@@ -19,7 +19,7 @@ public class SpringCommandBus implements CommandBus {
      *
      * @param registry a wrapper around Spring's application context
      */
-    public SpringCommandBus(final Registry registry) {
+    public SpringCommandBusReactive(final Registry registry) {
         this.registry = registry;
     }
 
@@ -30,8 +30,8 @@ public class SpringCommandBus implements CommandBus {
      */
     @Override
     public <C extends Command> void execute(final C command) {
-        CommandHandler<C> commandHandler = (CommandHandler<C>) this.registry.get(command.getClass());
-        commandHandler.handle(command);
+        CommandHandlerReactive<C> commandHandler = (CommandHandlerReactive<C>) this.registry.get(command.getClass());
+        commandHandler.handle(Mono.just(command));
     }
 
 }

@@ -1,13 +1,16 @@
 package com.emedina.command.spring.handler;
 
+import com.emedina.sharedkernel.command.core.CommandHandlerReactive;
 import com.emedina.command.spring.command.LowerCaseCommand;
-import com.emedina.sharedkernel.command.core.CommandHandler;
+import reactor.core.publisher.Mono;
 
-public class LowerCaseHandler implements CommandHandler<LowerCaseCommand> {
+public class LowerCaseHandler implements CommandHandlerReactive<LowerCaseCommand> {
 
     @Override
-    public void handle(final LowerCaseCommand command) {
-
-        System.out.print(command.text().toLowerCase());
+    public void handle(final Mono<LowerCaseCommand> command) {
+        command
+                .map(LowerCaseCommand::text)
+                .map(String::toLowerCase)
+                .subscribe(System.out::print);
     }
 }
