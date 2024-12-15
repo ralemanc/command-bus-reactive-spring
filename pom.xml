@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.emedina.command</groupId>
-    <artifactId>command-bus-spring-boot</artifactId>
+    <artifactId>command-bus-reactive-spring</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -19,6 +19,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <spring-framework-bom.version>6.2.1</spring-framework-bom.version>
+        <!--reactor-bom.version>2024.0.1</reactor-bom.version-->
+        <reactor.version>3.7.1</reactor.version>
 
         <shared-kernel-command-bus.version>1.0.0</shared-kernel-command-bus.version>
 
@@ -39,6 +41,13 @@
                 <version>${spring-framework-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+                <!--dependency>
+                    <groupId>io.projectreactor</groupId>
+                    <artifactId>reactor-bom</artifactId>
+                    <version>${reactor-bom.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+            </dependency-->
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -54,6 +63,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>${reactor.version}</version>
         </dependency>
 
         <dependency>
